@@ -2,15 +2,9 @@ import TaskList from '../components/TaskList';
 import CategoryFilter from '../components/CategoryFilter';
 import { useTasksContext } from '../hooks/useTasksContext';
 
-/**
- * Componente `CompletedTasksPage`
- * Muestra una lista de tareas que han sido marcadas como completadas.
- * Filtra las tareas recibidas por props para mostrar solo las completadas y las pasa a `TaskList`.
- */
 function CompletedTasksPage() {
   const { allTasks, eliminarTarea, guardarCambios, toggleFavorita, toggleCompletada, filtroCategoria, setFiltroCategoria, filtroFecha, setFiltroFecha } = useTasksContext();
 
-  // Filtra las tareas para obtener solo aquellas que están marcadas como completadas
   const tareasCompletadas = allTasks
     .filter(tarea => tarea.completada && (filtroCategoria === 'todas' || tarea.categoria === filtroCategoria))
     .sort((a, b) => {
@@ -23,26 +17,27 @@ function CompletedTasksPage() {
     });
 
   return (
-    <div>
-      <h2>Tareas Completadas</h2>
-      <CategoryFilter
-        setFiltroCategoria={setFiltroCategoria}
-        filtroCategoria={filtroCategoria}
-        setFiltroFecha={setFiltroFecha}
-        filtroFecha={filtroFecha}
-      />
-      {/* Renderiza TaskList si hay tareas completadas, de lo contrario muestra un mensaje */}
-      {tareasCompletadas.length > 0 ? (
-        <TaskList
-          tareas={tareasCompletadas} // Pasa solo las tareas completadas al TaskList
-          eliminarTarea={eliminarTarea}
-          guardarCambios={guardarCambios}
-          toggleFavorita={toggleFavorita}
-          toggleCompletada={toggleCompletada}
+    <div className="bg-gray-900 rounded-lg p-6">
+      <h1 className="text-3xl font-bold text-center mb-6">Tareas Completadas</h1>
+      <div className="max-w-xl mx-auto">
+        <CategoryFilter
+          setFiltroCategoria={setFiltroCategoria}
+          filtroCategoria={filtroCategoria}
+          setFiltroFecha={setFiltroFecha}
+          filtroFecha={filtroFecha}
         />
-      ) : (
-        <p>No tienes tareas completadas.</p>
-      )}
+        {tareasCompletadas.length > 0 ? (
+          <TaskList
+            tareas={tareasCompletadas}
+            eliminarTarea={eliminarTarea}
+            guardarCambios={guardarCambios}
+            toggleFavorita={toggleFavorita}
+            toggleCompletada={toggleCompletada}
+          />
+        ) : (
+          <p className="text-center text-gray-400 mt-8">No tienes tareas completadas.</p>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,69 +1,62 @@
 import React, { useState } from 'react';
 import { CATEGORIES } from '../constants';
 
-/**
- * Componente `TaskForm`
- * Un formulario para agregar nuevas tareas con categoría.
- * Gestiona el estado del input y llama a la función `onAddTask` del padre al enviar el formulario.
- */
 function TaskForm({ onAddTask }) {
-    // Estado local para almacenar el texto de la nueva tarea
     const [nuevaTarea, setNuevaTarea] = useState('');
-    // Estado local para la categoría
     const [categoria, setCategoria] = useState('');
 
-    // Maneja el cambio en el input del formulario
     const manejarCambio = (e) => {
         setNuevaTarea(e.target.value);
     };
 
-    // Maneja el cambio de la categoría
     const manejarCambioCategoria = (e) => {
         setCategoria(e.target.value);
     };
 
-    // Maneja el envío del formulario
     const manejarEnvio = (e) => {
-        e.preventDefault(); // Previene el comportamiento por defecto del formulario (recargar la página)
-        onAddTask(nuevaTarea, categoria); // Llama a la función `onAddTask` pasada por props con el texto y la categoría
-        setNuevaTarea(''); // Limpia el input después de agregar la tarea
-        setCategoria(''); // Resetea la categoría
+        e.preventDefault();
+        if (nuevaTarea.trim()) {
+            onAddTask(nuevaTarea, categoria);
+            setNuevaTarea('');
+            setCategoria('');
+        }
     };
 
     return (
-        <form onSubmit={manejarEnvio}>
+        <form onSubmit={manejarEnvio} className="flex gap-2 mb-4">
             <input
                 type="text"
                 value={nuevaTarea}
                 onChange={manejarCambio}
                 placeholder="Escribe una nueva tarea"
+                className="flex-grow p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
             />
-            <select id="task-category" value={categoria} onChange={manejarCambioCategoria}>
+            <select
+                id="task-category"
+                value={categoria}
+                onChange={manejarCambioCategoria}
+                className="p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
                 <option value="">Sin Categoría</option>
                 {CATEGORIES.map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
                 ))}
             </select>
-            <label htmlFor="task-category" style={{ marginRight: '10px' }}>
-                <span 
+            <div className="relative flex items-center">
+                <span
                     title="Si no eliges una categoría, la IA lo hará automáticamente."
-                    style={{
-                        cursor: 'pointer', 
-                        marginLeft: '5px', 
-                        color: '#333',
-                        fontWeight: 'bolder',
-                        fontFamily: 'sans-serif',
-                        border: '1.5px solid #333',
-                        borderRadius: '50%',
-                        padding: '2px 6px',
-                        fontSize: '12px'
-                    }}
+                    className="cursor-pointer ml-1 text-gray-400 border border-gray-500 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold"
                 >
                     i
                 </span>
-            </label>
-            <button type="submit">Agregar Tarea</button>
+            </div>
+            <button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+            >
+                Agregar
+            </button>
         </form>
     );
 }

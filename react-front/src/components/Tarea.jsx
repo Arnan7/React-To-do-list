@@ -17,8 +17,10 @@ function Tarea({ tarea, eliminarTarea, guardarCambios, toggleFavorita, toggleCom
   };
 
   const manejarGuardar = () => {
-    guardarCambios(tarea.id, textoEditado);
-    setEstaEditando(false);
+    if (textoEditado.trim()) {
+      guardarCambios(tarea.id, textoEditado);
+      setEstaEditando(false);
+    }
   };
 
   const manejarToggleFavorita = () => {
@@ -29,49 +31,63 @@ function Tarea({ tarea, eliminarTarea, guardarCambios, toggleFavorita, toggleCom
     toggleCompletada(tarea.id);
   };
 
-  const categoryStyle = {
-    display: 'inline-block',
-    marginLeft: '8px',
-    padding: '2px 6px',
-    backgroundColor: '#e0e0e0',
-    borderRadius: '12px',
-    fontSize: '0.8em',
-    fontWeight: 'bold',
-  };
-
   const modoEdicion = (
-    <>
-      <li>
-        <input type="text" value={textoEditado} onChange={manejarCambio} />
-        <button onClick={manejarGuardar}>Guardar</button>
-      </li>
-      <hr />
-    </>
+    <div className="bg-gray-800 p-4 rounded-lg flex items-center gap-2">
+      <input
+        type="text"
+        value={textoEditado}
+        onChange={manejarCambio}
+        className="flex-grow p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        autoFocus
+      />
+      <button
+        onClick={manejarGuardar}
+        className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors"
+      >
+        Guardar
+      </button>
+    </div>
   );
 
   const modoLectura = (
-    <>
-      <li>
-        <input
-          type="checkbox"
-          checked={tarea.completada}
-          onChange={manejarToggleCompletada}
-        />
-        <span style={{ textDecoration: tarea.completada ? 'line-through' : 'none' }}>
+    <div className="bg-gray-800 p-4 rounded-lg flex items-start gap-4 transition-colors hover:bg-gray-700">
+      <input
+        type="checkbox"
+        checked={tarea.completada}
+        onChange={manejarToggleCompletada}
+        className="mt-1 form-checkbox h-5 w-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+      />
+      <div className="flex-grow">
+        <p className={`text-lg ${tarea.completada ? 'line-through text-gray-500' : ''}`}>
           {tarea.texto}
-        </span>
-        {tarea.categoria && <span style={categoryStyle}>{tarea.categoria}</span>}
-        <br />
-        {tarea.createdAt && <small>Created At: {new Date(tarea.createdAt).toLocaleString()}</small>}
-        <br />
-        <button onClick={manejarEdicion}>Editar</button>
-        <button onClick={manejarEliminar}>X</button>
-        <button onClick={manejarToggleFavorita}>
-          {tarea.favorita ? '★ Favorita' : '☆ Marcar Favorita'}
+        </p>
+        <div className="text-sm text-gray-400 mt-1">
+          {tarea.createdAt && <span>{new Date(tarea.createdAt).toLocaleString()}</span>}
+          {tarea.categoria && (
+            <span className="ml-2 inline-block bg-gray-600 text-gray-300 px-2 py-1 rounded-full text-xs font-semibold">
+              {tarea.categoria}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        <button onClick={manejarToggleFavorita} className="text-2xl">
+          {tarea.favorita ? '★' : '☆'}
         </button>
-      </li>
-      <hr />
-    </>
+        <button
+          onClick={manejarEdicion}
+          className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded transition-colors text-sm"
+        >
+          Editar
+        </button>
+        <button
+          onClick={manejarEliminar}
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded transition-colors text-sm"
+        >
+          X
+        </button>
+      </div>
+    </div>
   );
 
   return estaEditando ? modoEdicion : modoLectura;

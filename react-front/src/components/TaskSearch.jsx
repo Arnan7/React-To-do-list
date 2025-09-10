@@ -1,31 +1,20 @@
-/**
- * Componente `TaskSearch`
- * Un simple componente de input para buscar y filtrar tareas.
- * Recibe el valor actual de búsqueda y una función `onChange` para actualizarlo.
- */
 function TaskSearch({ value, onChange }) {
   return (
-    <div style={{ marginBottom: '1rem', position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+    <div className="relative w-full">
       <input
         type="text"
-        placeholder="Buscar tareas..." // Texto de marcador de posición para el input
-        value={value} // El valor actual del input, controlado por el componente padre
-        onChange={(e) => onChange(e.target.value)} // Llama a la función `onChange` del padre con el nuevo valor del input
-        style={{ paddingRight: '2rem' }} // Añade espacio para el icono
+        placeholder="Buscar tareas..."
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 pr-8"
       />
       {value && (
-        <span
+        <button
           onClick={() => onChange('')}
-          style={{
-            position: 'absolute',
-            right: '0.5rem',
-            cursor: 'pointer',
-            color: '#888',
-            fontSize: '0.8rem',
-          }}
+          className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-white"
         >
           ✕
-        </span>
+        </button>
       )}
     </div>
   );
