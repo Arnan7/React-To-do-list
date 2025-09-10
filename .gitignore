@@ -1,0 +1,20 @@
+# Ignorar directorios y archivos de Node.js
+/react-front/node_modules
+/react-front/dist
+/react-front/.vite
+
+# Ignorar archivos de entorno
+.env
+/react-front/.env
+/backend/.env
+
+# Ignorar directorios y archivos de Python
+/backend/__pycache__
+/backend/venv
+*.pyc
+*.pyo
+*.log
+
+# Ignorar archivos específicos del sistema operativo
+.DS_Store
+Thumbs.db

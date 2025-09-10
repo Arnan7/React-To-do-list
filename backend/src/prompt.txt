@@ -1,0 +1,9 @@
+-crea una Api con fastApi donde se ingrese el nombre de una tarea de una todo list,
+conecta la api de gemini ApiKey: AIzaSyDBMILpiY0yFGjMobful4NG1d5_vtDCHZ4
+y usa este prompt,pero reemplaza "Hacer ejercicio en el gimnasio." por lo que se ingrese en el endpoint:
+
+Clasifica la siguiente tarea en una de las categorías provistas. Si no se ajusta a ninguna, encuentra la categoría más apropiada para la tarea y regresa esa categoría. Si no puedes encontrar ninguna categoría, regresa "Otro".
+Categorías dadas: ["Trabajo", "Personal", "Compras", "Estudios", "Salud"]
+Tarea: "Hacer ejercicio en el gimnasio."
+
+-luego retorna el resultado 
